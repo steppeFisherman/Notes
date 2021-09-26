@@ -1,9 +1,11 @@
 package com.example.notes.screens.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,11 +34,13 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = ViewModelProvider(
             this,
             MainFragmentViewModelFactory()
         ).get(MainFragmentViewModel::class.java)
         initialise()
+        hideKeyboard(view)
     }
 
     private fun initialise() {
@@ -52,6 +56,12 @@ class MainFragment : Fragment() {
             APP_ACTIVITY.navController
                 .navigate(R.id.action_mainFragment_to_addNewNoteFragment)
         }
+    }
+
+    private fun hideKeyboard(view: View) {
+        val imm = requireActivity()
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onDestroyView() {
