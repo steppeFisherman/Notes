@@ -15,7 +15,8 @@ class AddNewNoteViewModelFactory : ViewModelProvider.Factory {
     private val addNewNoteUseCase by lazy(LazyThreadSafetyMode.NONE) {
         AddNewNoteUseCase(noteRepository = noteRepository)
     }
-
+    
+    @SuppressWarnings("unchecked")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return AddNewNoteViewModel(addNewNoteUseCase = addNewNoteUseCase) as T
     }

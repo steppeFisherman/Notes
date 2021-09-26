@@ -16,6 +16,7 @@ class MainFragmentViewModelFactory : ViewModelProvider.Factory {
         FetchNotesUseCase(noteRepository = noteRepository)
     }
 
+    @SuppressWarnings("unchecked")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return MainFragmentViewModel(fetchNotesUseCase = fetchNotesUseCase) as T
     }
