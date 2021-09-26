@@ -1,30 +1,30 @@
-package com.example.notes.database.room
+package com.example.notes.data.storage
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.notes.model.AppNote
+import com.example.notes.data.storage.models.NoteData
 
-@Database(entities = [AppNote::class],version = 1)
-abstract class AppRoomDatabase: RoomDatabase() {
+@Database(entities = [NoteData::class], version = 1, exportSchema = false)
+abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun getAppRoomDao(): AppRoomDao
 
-    companion object{
+    companion object {
 
         @Volatile
         private var database: AppRoomDatabase? = null
 
         @Synchronized
-        fun getInstance(context: Context): AppRoomDatabase{
-            return if (database == null){
+        fun getInstance(context: Context): AppRoomDatabase {
+            return if (database == null) {
                 database = Room.databaseBuilder(
                     context,
                     AppRoomDatabase::class.java,
                     "database"
                 ).build()
                 database as AppRoomDatabase
-            }else database as AppRoomDatabase
+            } else database as AppRoomDatabase
         }
     }
 }

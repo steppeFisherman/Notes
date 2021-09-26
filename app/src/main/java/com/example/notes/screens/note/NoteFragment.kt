@@ -3,30 +3,32 @@ package com.example.notes.screens.note
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.notes.R
 import com.example.notes.databinding.FragmentNoteBinding
-import com.example.notes.model.AppNote
+import com.example.notes.domain.models.NoteDomain
 import com.example.notes.utils.APP_ACTIVITY
 
 class NoteFragment : Fragment() {
 
     private var binding: FragmentNoteBinding? = null
     private val mBinding get() = binding!!
-    private val viewModel by viewModels<NoteFragmentViewModel>()
-    private lateinit var mCurrentNote: AppNote
+    private lateinit var viewModel: NoteFragmentViewModel
+    private lateinit var mCurrentNote: NoteDomain
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNoteBinding.inflate(layoutInflater, container, false)
-        mCurrentNote = arguments?.getSerializable("note") as AppNote
+        mCurrentNote = arguments?.getSerializable("note") as NoteDomain
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, NoteFragmentViewModelFactory())
+            .get(NoteFragmentViewModel::class.java)
         initialise()
     }
 
@@ -42,9 +44,11 @@ class NoteFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.btn_delete -> viewModel.delete(mCurrentNote) {
-                APP_ACTIVITY.navController
-                    .navigate(R.id.action_noteFragment_to_mainFragment)
+            R.id.btn_delete -> {
+                viewModel.delete(mCurrentNote) {
+                    APP_ACTIVITY.navController
+                        .navigate(R.id.action_noteFragment_to_mainFragment)
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -54,5 +58,4 @@ class NoteFragment : Fragment() {
         super.onDestroyView()
         binding = null
     }
-
 }

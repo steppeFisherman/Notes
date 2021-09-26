@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.databinding.NoteItemBinding
-import com.example.notes.model.AppNote
+import com.example.notes.domain.models.NoteDomain
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.MainHolder>() {
 
-    private var mListNotes = emptyList<AppNote>()
+    private var mListNotes = emptyList<NoteDomain>()
 
     override fun onViewAttachedToWindow(holder: MainHolder) {
         holder.itemView.setOnClickListener {
@@ -40,9 +40,8 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainHolder>() {
         val textNote = view.itemNoteText
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<AppNote>) {
+    fun setList(list: List<NoteDomain>) {
         mListNotes = list
         notifyDataSetChanged()
     }

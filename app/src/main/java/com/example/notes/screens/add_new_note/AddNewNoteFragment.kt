@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.notes.R
 import com.example.notes.databinding.FragmentAddNewNoteBinding
-import com.example.notes.model.AppNote
+import com.example.notes.domain.models.NoteDomain
 import com.example.notes.utils.APP_ACTIVITY
 import com.example.notes.utils.showToast
 
@@ -16,7 +16,7 @@ class AddNewNoteFragment : Fragment() {
 
     private var binding: FragmentAddNewNoteBinding? = null
     private val mBinding get() = binding!!
-    private val viewModel by viewModels<AddNewNoteViewModel>()
+    private lateinit var viewModel: AddNewNoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +29,11 @@ class AddNewNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(
+            this,
+            AddNewNoteViewModelFactory()
+        ).get(AddNewNoteViewModel::class.java)
+
         mBinding.btnAddNote.setOnClickListener {
             addNote()
         }
@@ -40,8 +45,9 @@ class AddNewNoteFragment : Fragment() {
         if (name.isEmpty()) {
             showToast(getString(R.string.toast_enter_name))
         } else {
-            viewModel.insert(AppNote(name = name, text = text)) {
-                APP_ACTIVITY.navController.navigate(R.id.action_addNewNoteFragment_to_mainFragment)
+            viewModel.insert(NoteDomain(name = name, text = text)) {
+                APP_ACTIVITY.navController
+                    .navigate(R.id.action_addNewNoteFragment_to_mainFragment)
             }
         }
     }

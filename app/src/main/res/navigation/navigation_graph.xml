@@ -13,6 +13,8 @@
         <action
             android:id="@+id/action_addNewNoteFragment_to_mainFragment"
             app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
             app:launchSingleTop="true"
             app:popUpTo="@id/navigation_graph" />
     </fragment>
@@ -23,10 +25,18 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_addNewNoteFragment"
-            app:destination="@id/addNewNoteFragment" />
+            app:destination="@id/addNewNoteFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_mainFragment_to_noteFragment"
-            app:destination="@id/noteFragment" />
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
@@ -36,6 +46,8 @@
         <action
             android:id="@+id/action_noteFragment_to_mainFragment"
             app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
             app:launchSingleTop="true"
             app:popUpTo="@id/navigation_graph" />
     </fragment>

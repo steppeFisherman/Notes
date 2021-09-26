@@ -5,23 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
-import com.example.notes.model.AppNote
+import com.example.notes.domain.models.NoteDomain
 import com.example.notes.utils.APP_ACTIVITY
 
 class MainFragment : Fragment() {
 
     private var binding: FragmentMainBinding? = null
     private val mBinding get() = binding!!
-    private val viewModel by viewModels<MainFragmentViewModel>()
+    private lateinit var viewModel: MainFragmentViewModel
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: MainAdapter
-    private lateinit var mObserverList: Observer<List<AppNote>>
+    private lateinit var mObserverList: Observer<List<NoteDomain>>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +32,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(
+            this,
+            MainFragmentViewModelFactory()
+        ).get(MainFragmentViewModel::class.java)
         initialise()
     }
 
@@ -46,7 +49,8 @@ class MainFragment : Fragment() {
         }
         viewModel.allNotes.observe(viewLifecycleOwner, mObserverList)
         mBinding.btnAddNote.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_addNewNoteFragment)
+            APP_ACTIVITY.navController
+                .navigate(R.id.action_mainFragment_to_addNewNoteFragment)
         }
     }
 
@@ -57,7 +61,7 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        fun click(note: AppNote) {
+        fun click(note: NoteDomain) {
             val bundle = Bundle()
             bundle.putSerializable("note", note)
             APP_ACTIVITY.navController

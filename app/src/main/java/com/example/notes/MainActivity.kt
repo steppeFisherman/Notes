@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.notes.database.room.AppRoomDatabase
-import com.example.notes.database.room.AppRoomRepository
+import com.example.notes.data.storage.AppRoomDatabase
+import com.example.notes.data.repository.NoteRepositoryImpl
 import com.example.notes.databinding.ActivityMainBinding
 import com.example.notes.utils.APP_ACTIVITY
+import com.example.notes.utils.DAO
 import com.example.notes.utils.REPOSITORY
 
 class MainActivity : AppCompatActivity() {
@@ -26,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initialise() {
-        val dao = AppRoomDatabase.getInstance(this).getAppRoomDao()
-        REPOSITORY = AppRoomRepository(dao)
+
+        DAO = AppRoomDatabase.getInstance(this).getAppRoomDao()
+        REPOSITORY = NoteRepositoryImpl(DAO)
         APP_ACTIVITY = this
         mToolbar = mBinding.toolbar
         val navHostFragment =
