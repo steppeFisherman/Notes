@@ -3,17 +3,19 @@ package com.example.notes.screens.note
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.notes.R
 import com.example.notes.databinding.FragmentNoteBinding
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.utils.APP_ACTIVITY
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoteFragment : Fragment() {
 
     private var binding: FragmentNoteBinding? = null
     private val mBinding get() = binding!!
-    private lateinit var viewModel: NoteFragmentViewModel
+    private val vm: NoteFragmentViewModel by viewModels()
     private lateinit var mCurrentNote: NoteDomain
 
     override fun onCreateView(
@@ -27,8 +29,6 @@ class NoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, NoteFragmentViewModelFactory())
-            .get(NoteFragmentViewModel::class.java)
         initialise()
     }
 
@@ -45,7 +45,7 @@ class NoteFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.btn_delete -> {
-                viewModel.delete(mCurrentNote) {
+                vm.delete(mCurrentNote) {
                     APP_ACTIVITY.navController
                         .navigate(R.id.action_noteFragment_to_mainFragment)
                 }
