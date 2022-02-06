@@ -14,17 +14,17 @@ import dagger.hilt.android.components.ViewModelComponent
 class DomainModule {
 
     @Provides
-    fun provideAddNewNoteUseCase(noteRepository: NoteRepository): AddNewNoteUseCase {
-        return AddNewNoteUseCase(noteRepository = noteRepository)
-    }
+    fun provideAddNewNoteUseCase(noteRepository: NoteRepository) =
+        AddNewNoteUseCase(noteRepository = noteRepository)
 
     @Provides
-    fun provideDeleteNoteUseCase(noteRepository: NoteRepository): DeleteNoteUseCase {
-        return DeleteNoteUseCase(noteRepository = noteRepository)
-    }
+    fun provideDeleteNoteUseCase(noteRepository: NoteRepository) =
+        DeleteNoteUseCase(noteRepository = noteRepository)
 
     @Provides
-    fun provideFetchNotesUseCase(noteRepository: NoteRepository): FetchNotesUseCase {
-        return FetchNotesUseCase(noteRepository = noteRepository)
-    }
+    fun provideFetchNotesUseCase(noteRepository: NoteRepository) =
+        FetchNotesUseCase(noteRepository = noteRepository)
+
+    @Provides
+    fun provideDispatchers() = BaseDispatcher()
 }

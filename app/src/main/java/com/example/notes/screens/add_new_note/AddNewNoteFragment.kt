@@ -1,32 +1,24 @@
 package com.example.notes.screens.add_new_note
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
 import com.example.notes.R
 import com.example.notes.databinding.FragmentAddNewNoteBinding
 import com.example.notes.domain.models.NoteDomain
+import com.example.notes.screens.BaseFragment
 import com.example.notes.utils.APP_ACTIVITY
 import com.example.notes.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNewNoteFragment : Fragment() {
+class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
 
-    private var binding: FragmentAddNewNoteBinding? = null
-    private val mBinding get() = binding!!
     private val vm by viewModels<AddNewNoteViewModel>()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAddNewNoteBinding
-            .inflate(layoutInflater, container, false)
-        return mBinding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,8 +40,13 @@ class AddNewNoteFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+    override fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentAddNewNoteBinding {
+        Log.d("AAA", "AddNewNoteFragment initBinding")
+        return FragmentAddNewNoteBinding.inflate(inflater, container, false)
     }
 }
+
+

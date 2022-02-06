@@ -2,30 +2,19 @@ package com.example.notes.screens.note
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.notes.R
 import com.example.notes.databinding.FragmentNoteBinding
 import com.example.notes.domain.models.NoteDomain
+import com.example.notes.screens.BaseFragment
 import com.example.notes.utils.APP_ACTIVITY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NoteFragment : Fragment() {
+class NoteFragment : BaseFragment<FragmentNoteBinding>() {
 
-    private var binding: FragmentNoteBinding? = null
-    private val mBinding get() = binding!!
-    private val vm: NoteFragmentViewModel by viewModels()
+    private val vm by viewModels<NoteFragmentViewModel>()
     private lateinit var mCurrentNote: NoteDomain
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentNoteBinding.inflate(layoutInflater, container, false)
-        mCurrentNote = arguments?.getSerializable("note") as NoteDomain
-        return mBinding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,6 +22,7 @@ class NoteFragment : Fragment() {
     }
 
     private fun initialise() {
+        mCurrentNote = arguments?.getSerializable("note") as NoteDomain
         setHasOptionsMenu(true)
         mBinding.noteText.text = mCurrentNote.text
         mBinding.noteName.text = mCurrentNote.name
@@ -54,8 +44,6 @@ class NoteFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
+    override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentNoteBinding.inflate(inflater, container, false)
 }

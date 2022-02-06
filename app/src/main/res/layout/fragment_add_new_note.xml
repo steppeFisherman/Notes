@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".screens.add_new_note.AddNewNoteFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputNameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/app_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        style="@style/textInputLayout"
+        android:layout_marginTop="@dimen/app_margin">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_name_note"
-            style="@style/textInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/add_name_to_note"
             android:maxLength="25"
             android:singleLine="true" />
@@ -25,15 +22,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputTextLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputNameLayout">
+        style="@style/textInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_text_note"
-            style="@style/textInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/add_text_to_note"
             android:inputType="text|textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,8 +38,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/app_margin"
-        android:text="@string/btn_add_note"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputTextLayout" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/btn_add_note" />
+</androidx.appcompat.widget.LinearLayoutCompat>
