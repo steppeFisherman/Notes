@@ -7,9 +7,7 @@ import com.example.notes.data.storage.models.NoteData
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.domain.repository.NoteRepository
 
-class NoteRepositoryImpl(
-    private val appRoomDao: AppRoomDao
-) : NoteRepository {
+class NoteRepositoryImpl(private val appRoomDao: AppRoomDao) : NoteRepository {
 
     override val allNotes: LiveData<List<NoteDomain>>
         get() = appRoomDao.getAllNotes().map { listNoteData ->

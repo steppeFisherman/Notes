@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.databinding.NoteItemBinding
 import com.example.notes.domain.models.NoteDomain
 
-class MainAdapter : RecyclerView.Adapter<MainAdapter.MainHolder>() {
+class MainAdapter(private val clickListener: ClickListener) :
+    RecyclerView.Adapter<MainAdapter.MainHolder>() {
 
     private var mListNotes = emptyList<NoteDomain>()
 
     override fun onViewAttachedToWindow(holder: MainHolder) {
         holder.itemView.setOnClickListener {
-            MainFragment.click(mListNotes[holder.adapterPosition])
+            clickListener.click(mListNotes[holder.adapterPosition])
         }
     }
 
@@ -45,4 +46,10 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainHolder>() {
         mListNotes = list
         notifyDataSetChanged()
     }
+
+    interface ClickListener {
+        fun click(noteDomain: NoteDomain)
+    }
 }
+
+

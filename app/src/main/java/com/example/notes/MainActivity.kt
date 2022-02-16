@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.notes.databinding.ActivityMainBinding
-import com.example.notes.utils.APP_ACTIVITY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,12 +25,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initialise() {
-        APP_ACTIVITY = this
         mToolbar = mBinding.toolbar
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-        setSupportActionBar(mToolbar)
+         navController = navHostFragment.navController
+       setSupportActionBar(mToolbar)
         title = getString(R.string.title)
     }
 

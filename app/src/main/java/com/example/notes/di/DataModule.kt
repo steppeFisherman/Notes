@@ -18,13 +18,11 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideDao(@ApplicationContext context: Context): AppRoomDao {
-        return AppRoomDatabase.getInstance(context = context).getAppRoomDao()
-    }
+    fun provideDao(@ApplicationContext context: Context): AppRoomDao =
+        AppRoomDatabase.getInstance(context = context).getAppRoomDao()
 
     @Provides
     @Singleton
-    fun provideRepository(appRoomDao: AppRoomDao): NoteRepository {
-        return NoteRepositoryImpl(appRoomDao = appRoomDao)
-    }
+    fun provideRepository(appRoomDao: AppRoomDao): NoteRepository =
+        NoteRepositoryImpl(appRoomDao = appRoomDao)
 }

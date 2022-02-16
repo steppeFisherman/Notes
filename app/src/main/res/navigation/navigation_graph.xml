@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/addNewNoteFragment"
         android:name="com.example.notes.screens.add_new_note.AddNewNoteFragment"
-        android:label="fragment_add_new_note"
         tools:layout="@layout/fragment_add_new_note">
         <action
             android:id="@+id/action_addNewNoteFragment_to_mainFragment"
@@ -21,7 +20,6 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.notes.screens.main.MainFragment"
-        android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_addNewNoteFragment"
@@ -41,7 +39,6 @@
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.example.notes.screens.note.NoteFragment"
-        android:label="fragment_note"
         tools:layout="@layout/fragment_note">
         <action
             android:id="@+id/action_noteFragment_to_mainFragment"

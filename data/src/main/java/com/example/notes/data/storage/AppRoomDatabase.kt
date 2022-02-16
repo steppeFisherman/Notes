@@ -8,6 +8,7 @@ import com.example.notes.data.storage.models.NoteData
 
 @Database(entities = [NoteData::class], version = 1, exportSchema = false)
 abstract class AppRoomDatabase : RoomDatabase() {
+
     abstract fun getAppRoomDao(): AppRoomDao
 
     companion object {
