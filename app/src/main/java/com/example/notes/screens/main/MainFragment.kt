@@ -12,6 +12,7 @@ import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.screens.BaseFragment
+import com.example.notes.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,6 +34,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         mBinding.btnAddNote.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_addNewNoteFragment)
         }
+        hideKeyboard(requireActivity(), view)
     }
 
     private fun setUpAdapter() {

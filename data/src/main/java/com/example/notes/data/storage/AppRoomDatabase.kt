@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.notes.data.storage.models.NoteData
+import com.example.notes.data.storage.models.NoteDB
 
-@Database(entities = [NoteData::class], version = 1, exportSchema = false)
+@Database(entities = [NoteDB::class], version = 1, exportSchema = false)
 abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun getAppRoomDao(): AppRoomDao

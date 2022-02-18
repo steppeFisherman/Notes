@@ -7,7 +7,7 @@ interface NoteRepository {
 
     val allNotes: LiveData<List<NoteDomain>>
 
-    suspend fun insert(note: NoteDomain, onSuccess: () -> Unit)
-    suspend fun delete(note: NoteDomain, onSuccess: () -> Unit)
+    suspend fun insert(noteDomain: NoteDomain, onSuccess: () -> Unit)
+    suspend fun delete(noteDomain: NoteDomain, onSuccess: () -> Unit)
 
 }

@@ -1,7 +1,6 @@
 package com.example.notes.domain.usecases
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.domain.repository.NoteRepository
 
@@ -11,3 +10,4 @@ class FetchNotesUseCase(private val noteRepository: NoteRepository) {
         return noteRepository.allNotes
     }
 }
+
