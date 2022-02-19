@@ -9,7 +9,6 @@ import com.example.notes.domain.models.NoteDomain
 
 class MainAdapter(private val clickListener: ClickListener) :
     RecyclerView.Adapter<MainAdapter.MainHolder>() {
-
     private var mListNotes = emptyList<NoteDomain>()
 
     override fun onViewAttachedToWindow(holder: MainHolder) {

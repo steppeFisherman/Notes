@@ -3,13 +3,11 @@ package com.example.notes
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.Person
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.notes.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         setSupportActionBar(mToolbar)
+        setupWithNavController(mToolbar, navController)
         title = getString(R.string.title)
     }
 
@@ -40,26 +39,3 @@ class MainActivity : AppCompatActivity() {
         _binding = null
     }
 }
-
-fun calculate(): (Int, Int) -> Int {  // 1
-    return ::sum                                          // 2
-}
-
-fun sum(x: Int, y: Int) = x + y                                     // 3
-
-fun main() {
-    val sumResult = calculate()
-
-    println("sumResult ${sumResult(10,20)}")
-}
-
-//fun operation(): (Int) -> Int {                                     // 1
-//    return ::square
-//}
-//
-//fun square(x: Int) = x * x                                          // 2
-//
-//fun main() {
-//    val func = operation()                                          // 3
-//    println(func(2))                                                // 4
-//}

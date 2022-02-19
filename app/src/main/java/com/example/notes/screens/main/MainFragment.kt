@@ -16,7 +16,7 @@ import com.example.notes.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment<FragmentMainBinding>() {
+class MainFragment : BaseFragment<FragmentMainBinding>(), MainAdapter.ClickListener {
 
     private val vm by viewModels<MainFragmentViewModel>()
     private lateinit var mRecyclerView: RecyclerView
@@ -38,13 +38,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     }
 
     private fun setUpAdapter() {
-        mAdapter = MainAdapter(object : MainAdapter.ClickListener {
-            override fun click(noteDomain: NoteDomain) {
-                val bundle = Bundle()
-                bundle.putSerializable("note", noteDomain)
-                findNavController().navigate(R.id.action_mainFragment_to_noteFragment, bundle)
-            }
-        })
+        mAdapter = MainAdapter(this)
         mRecyclerView = mBinding.recyclerView
         mRecyclerView.adapter = mAdapter
     }
@@ -55,6 +49,12 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             mAdapter.setList(list)
         }
         vm.allNotes.observe(viewLifecycleOwner, mObserverList)
+    }
+
+    override fun click(noteDomain: NoteDomain) {
+        val bundle = Bundle()
+        bundle.putSerializable("note", noteDomain)
+        findNavController().navigate(R.id.action_mainFragment_to_noteFragment, bundle)
     }
 
     override fun onDestroyView() {
