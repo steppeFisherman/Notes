@@ -1,12 +1,12 @@
-package com.example.notes.data.storage
+package com.example.notes.data.storage.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.notes.data.storage.models.NoteDB
+import com.example.notes.data.storage.models.NoteCache
 
-@Database(entities = [NoteDB::class], version = 1, exportSchema = false)
+@Database(entities = [NoteCache::class], version = 1, exportSchema = false)
 abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun getAppRoomDao(): AppRoomDao

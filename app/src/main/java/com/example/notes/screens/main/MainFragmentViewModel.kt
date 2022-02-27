@@ -11,3 +11,5 @@ class MainFragmentViewModel @Inject constructor(fetchNotesUseCase: FetchNotesUse
 
     val allNotes = fetchNotesUseCase.execute()
 }
+
+

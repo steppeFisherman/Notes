@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "notes_table")
-data class NoteDB(
+data class NoteCache(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo
     val name: String = "",

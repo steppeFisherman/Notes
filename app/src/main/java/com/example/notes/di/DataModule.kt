@@ -3,8 +3,9 @@ package com.example.notes.di
 import android.content.Context
 import com.example.notes.data.repository.MapperNoteDB
 import com.example.notes.data.repository.NoteRepositoryImpl
-import com.example.notes.data.storage.AppRoomDao
-import com.example.notes.data.storage.AppRoomDatabase
+import com.example.notes.data.storage.firebase.FirebaseInstance
+import com.example.notes.data.storage.room.AppRoomDao
+import com.example.notes.data.storage.room.AppRoomDatabase
 import com.example.notes.domain.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
@@ -25,5 +26,13 @@ class DataModule {
     @Provides
     @Singleton
     fun provideRepository(appRoomDao: AppRoomDao): NoteRepository =
-        NoteRepositoryImpl(appRoomDao = appRoomDao, MapperNoteDB.Base())
+        NoteRepositoryImpl(
+            appRoomDao = appRoomDao,
+            MapperNoteDB.Base(),
+            FirebaseInstance.Base()
+        )
+
+    @Provides
+    @Singleton
+    fun provideFirebaseInstance() = FirebaseInstance.Base()
 }
