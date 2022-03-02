@@ -1,6 +1,5 @@
 package com.example.notes.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.notes.data.storage.firebase.FirebaseInstance
@@ -31,7 +30,8 @@ class NoteRepositoryImpl(
             firebase.noteCollectionReference().add(noteCloud).await()
             appRoomDao.insert(noteCache)
             onSuccess()
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
     }
 
     override suspend fun delete(noteDomain: NoteDomain, onSuccess: () -> Unit) {

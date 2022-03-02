@@ -2,9 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/app_margin"
+    style="@style/cardViewStyle"
     app:cardCornerRadius="@dimen/card_elevation"
     app:cardElevation="@dimen/card_corner_radius">
 
@@ -13,6 +11,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/app_margin">
+
+        <TextView
+            android:id="@+id/item_note_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textSize="@dimen/app_normal_text_10"
+            tools:text="Note date" />
 
         <TextView
             android:id="@+id/item_note_name"

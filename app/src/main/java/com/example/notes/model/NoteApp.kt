@@ -1,10 +1,14 @@
-package com.example.notes.data.storage.models
+package com.example.notes.model
 
-data class NoteCloud(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class NoteApp(
     val id: Int = 0,
     val firebaseId: String = "",
     val name: String = "",
     val text: String = "",
     val performDate: Long = 0,
     var performed: Boolean = false
-)
+) : Parcelable

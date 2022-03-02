@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notes.R
 import com.example.notes.databinding.FragmentNoteBinding
-import com.example.notes.domain.models.NoteDomain
+import com.example.notes.model.NoteApp
 import com.example.notes.screens.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class NoteFragment : BaseFragment<FragmentNoteBinding>() {
 
     private val vm by viewModels<NoteFragmentViewModel>()
-    private lateinit var mCurrentNote: NoteDomain
+    private lateinit var mCurrentNote: NoteApp
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentNoteBinding.inflate(inflater, container, false)
@@ -26,7 +26,7 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>() {
     }
 
     private fun initialise() {
-        mCurrentNote = arguments?.getSerializable("note") as NoteDomain
+        mCurrentNote = arguments?.getParcelable("note") ?: NoteApp()
         setHasOptionsMenu(true)
         mBinding.noteText.text = mCurrentNote.text
         mBinding.noteName.text = mCurrentNote.name

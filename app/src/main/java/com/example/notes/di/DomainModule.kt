@@ -4,6 +4,7 @@ import com.example.notes.domain.repository.NoteRepository
 import com.example.notes.domain.usecases.AddNewNoteUseCase
 import com.example.notes.domain.usecases.DeleteNoteUseCase
 import com.example.notes.domain.usecases.FetchNotesUseCase
+import com.example.notes.model.MapperNoteApp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +27,9 @@ class DomainModule {
         FetchNotesUseCase(noteRepository = noteRepository)
 
     @Provides
-    fun provideDispatchers() = BaseDispatcher()
+    fun provideMapperNoteApp(): MapperNoteApp =
+        MapperNoteApp.Base()
+
+    @Provides
+    fun provideDispatchers(): ToDispatch = ToDispatch.Base()
 }

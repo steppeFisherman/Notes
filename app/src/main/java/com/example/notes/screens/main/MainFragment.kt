@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.domain.models.NoteDomain
+import com.example.notes.model.NoteApp
 import com.example.notes.screens.BaseFragment
 import com.example.notes.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), MainAdapter.ClickListe
     private val vm by viewModels<MainFragmentViewModel>()
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: MainAdapter
-    private lateinit var mObserverList: Observer<List<NoteDomain>>
+    private lateinit var mObserverList: Observer<List<NoteApp>>
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMainBinding.inflate(inflater, container, false)
@@ -51,9 +52,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), MainAdapter.ClickListe
         vm.allNotes.observe(viewLifecycleOwner, mObserverList)
     }
 
-    override fun click(noteDomain: NoteDomain) {
+    override fun click(noteApp: NoteApp) {
         val bundle = Bundle()
-        bundle.putSerializable("note", noteDomain)
+        bundle.putParcelable("note", noteApp)
         findNavController().navigate(R.id.action_mainFragment_to_noteFragment, bundle)
     }
 
