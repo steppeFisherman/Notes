@@ -9,7 +9,7 @@ data class NoteCache(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo
-    val firebaseId: String = "",
+    var firebaseId: String = "",
     @ColumnInfo
     val name: String = "",
     @ColumnInfo

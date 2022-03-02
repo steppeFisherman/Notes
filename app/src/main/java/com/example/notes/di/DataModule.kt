@@ -32,7 +32,7 @@ class DataModule {
             FirebaseInstance.Base()
         )
 
-    @Provides
-    @Singleton
-    fun provideFirebaseInstance() = FirebaseInstance.Base()
+//    @Provides
+//    @Singleton
+//    fun provideFirebaseInstance() = FirebaseInstance.Base()
 }
