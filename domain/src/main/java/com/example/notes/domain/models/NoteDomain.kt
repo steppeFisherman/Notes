@@ -5,6 +5,6 @@ data class NoteDomain(
     val firebaseId: String = "",
     val name: String = "",
     val text: String = "",
-    val performDate: Long = 0,
+    var performDate: Long = 0,
     var performed: Boolean = false
 )

@@ -32,6 +32,7 @@ class MainAdapter(private val clickListener: ClickListener) :
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         holder.nameNote.text = mListNotes[position].name
         holder.textNote.text = mListNotes[position].text
+        holder.dateNote.text = mListNotes[position].performDate.toString()
     }
 
     override fun getItemCount(): Int = mListNotes.size
@@ -39,6 +40,7 @@ class MainAdapter(private val clickListener: ClickListener) :
     class MainHolder(view: NoteItemBinding) : RecyclerView.ViewHolder(view.root) {
         val nameNote = view.itemNoteName
         val textNote = view.itemNoteText
+        val dateNote = view.itemNoteDate
     }
 
     @SuppressLint("NotifyDataSetChanged")

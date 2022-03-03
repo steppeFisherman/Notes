@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
 
     private val vm by viewModels<AddNewNoteViewModel>()
+    private var dateLongType: Long = 0
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAddNewNoteBinding.inflate(inflater, container, false)
@@ -24,6 +25,9 @@ class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().title = getString(R.string.new_note)
+        mBinding.inputDateNote.setOnClickListener {
+            dateLongType = DatePickDialog.Base().obtainCalendar(it)
+        }
         mBinding.btnAddNote.setOnClickListener { addNote() }
     }
 
@@ -33,7 +37,7 @@ class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
         if (name.isEmpty()) {
             showToast(requireActivity(), getString(R.string.toast_enter_name))
         } else {
-            vm.insert(NoteDomain(name = name, text = text)) {
+            vm.insert(NoteDomain(name = name, text = text, performDate = dateLongType)) {
                 findNavController()
                     .navigate(R.id.action_addNewNoteFragment_to_mainFragment)
             }

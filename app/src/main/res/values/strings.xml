@@ -9,5 +9,6 @@
     <string name="new_note">Новая Заметка</string>
     <string name="add_name_to_note">Ведите название заметки</string>
     <string name="add_text_to_note">Ведите текст</string>
+    <string name="add_date_to_note">Выберите дату</string>
     <string name="toast_enter_name">Введите имя заметки</string>
 </resources>

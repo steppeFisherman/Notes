@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutCompat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="@dimen/app_margin"
     tools:context=".screens.add_new_note.AddNewNoteFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputNameLayout"
-        style="@style/textInputLayout"
-        android:layout_marginTop="@dimen/app_margin">
+        style="@style/textInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_name_note"
@@ -33,10 +34,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/input_date_note"
+        android:textColor="@color/grey"
+        style="@style/btnStyle"
+        android:text="@string/add_date_to_note" />
+
+    <Button
         android:id="@+id/btn_add_note"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/app_margin"
+        style="@style/btnStyle"
         android:text="@string/btn_add_note" />
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,6 +1,7 @@
 package com.example.notes.model
 
 import com.example.notes.domain.models.NoteDomain
+import java.util.*
 
 interface MapperNoteApp {
 
@@ -28,5 +29,7 @@ interface MapperNoteApp {
                 performDate = noteApp.performDate,
                 performed = noteApp.performed
             )
+
+        val currentDateTime = Calendar.getInstance().time.time
     }
 }
