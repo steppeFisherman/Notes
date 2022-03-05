@@ -1,6 +1,7 @@
 package com.example.notes.model
 
 import com.example.notes.domain.models.NoteDomain
+import java.text.DateFormat
 import java.util.*
 
 interface MapperNoteApp {
@@ -16,7 +17,7 @@ interface MapperNoteApp {
                 firebaseId = noteDomain.firebaseId,
                 name = noteDomain.name,
                 text = noteDomain.text,
-                performDate = noteDomain.performDate,
+                performDate = longToStringDate(noteDomain.performDate),
                 performed = noteDomain.performed
             )
 
@@ -26,10 +27,11 @@ interface MapperNoteApp {
                 firebaseId = noteApp.firebaseId,
                 name = noteApp.name,
                 text = noteApp.text,
-                performDate = noteApp.performDate,
+                performDate = (noteApp.performDate.trim()).toLong(),
                 performed = noteApp.performed
             )
 
-        val currentDateTime = Calendar.getInstance().time.time
+            private fun longToStringDate(long: Long) =
+                DateFormat.getDateInstance().format(long)
     }
 }

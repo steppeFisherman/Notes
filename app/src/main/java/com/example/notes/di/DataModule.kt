@@ -31,8 +31,4 @@ class DataModule {
             MapperNoteDB.Base(),
             FirebaseInstance.Base()
         )
-
-//    @Provides
-//    @Singleton
-//    fun provideFirebaseInstance() = FirebaseInstance.Base()
 }
