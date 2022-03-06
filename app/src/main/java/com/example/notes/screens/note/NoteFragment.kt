@@ -30,6 +30,7 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>() {
         setHasOptionsMenu(true)
         mBinding.noteText.text = mCurrentNote.text
         mBinding.noteName.text = mCurrentNote.name
+        mBinding.noteDate.text = mCurrentNote.performDate
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

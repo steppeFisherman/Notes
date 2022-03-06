@@ -1,6 +1,7 @@
 package com.example.notes.screens.main
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +33,7 @@ class MainAdapter(private val clickListener: ClickListener) :
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         holder.nameNote.text = mListNotes[position].name
         holder.textNote.text = mListNotes[position].text
-        holder.dateNote.text = mListNotes[position].performDate.toString()
+        holder.dateNote.text = mListNotes[position].performDate
     }
 
     override fun getItemCount(): Int = mListNotes.size

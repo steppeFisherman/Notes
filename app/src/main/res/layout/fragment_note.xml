@@ -8,6 +8,15 @@
     tools:context=".screens.note.NoteFragment">
 
     <TextView
+        android:id="@+id/note_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="@dimen/app_normal_text_14"
+        tools:text="Note date" />
+
+    <TextView
         android:id="@+id/note_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -21,7 +21,7 @@ import java.util.*
 class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
 
     private val vm by viewModels<AddNewNoteViewModel>()
-    private var dateLongType: Long = 0
+    private var selectedDate: Long = 0
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAddNewNoteBinding.inflate(inflater, container, false)
@@ -38,23 +38,30 @@ class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
     private fun addNote() {
         val name = mBinding.inputNameNote.text.toString()
         val text = mBinding.inputTextNote.text.toString()
-        if (name.isEmpty()) {
-            showToast(requireActivity(), getString(R.string.toast_enter_name))
-        } else {
-            vm.insert(
-                NoteApp(
-                    name = name,
-                    text = text,
-                    performDate = dateLongType.toString()
-                )
-            ) {
-                findNavController()
-                    .navigate(R.id.action_addNewNoteFragment_to_mainFragment)
+        val date = mBinding.inputDateNote.text.toString()
+        when {
+            name.isEmpty() -> showToast(requireActivity(), getString(R.string.toast_enter_name))
+            date == "Выберите дату" -> showToast(
+                requireActivity(),
+                getString(R.string.add_date_to_note)
+            )
+            else -> {
+                vm.insert(
+                    NoteApp(
+                        name = name,
+                        text = text,
+                        performDate = selectedDate.toString()
+                    )
+                ) {
+                    findNavController()
+                        .navigate(R.id.action_addNewNoteFragment_to_mainFragment)
+                }
             }
         }
     }
 
-    inner class BaseDatePick {
+    private inner class BaseDatePick {
+
         fun obtainCalendar(view: View) {
             val currentDateTime = Calendar.getInstance()
             val startYear = currentDateTime.get(Calendar.YEAR)
@@ -69,7 +76,7 @@ class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
                     pickedDateTime.set(Calendar.MONTH, month)
                     pickedDateTime.set(Calendar.DAY_OF_MONTH, day)
 
-                    dateLongType = pickedDateTime.time.time
+                    selectedDate = pickedDateTime.time.time
                     val text = DateFormat.getDateInstance()
                         .format(pickedDateTime.time)
                     (view as Button).text = text

@@ -5,6 +5,7 @@
     <dimen name="app_large_text">20sp</dimen>
     <dimen name="app_normal_text">16sp</dimen>
     <dimen name="app_normal_text_10">10sp</dimen>
+    <dimen name="app_normal_text_14">14sp</dimen>
     <dimen name="app_margin">16dp</dimen>
     <dimen name="app_margin_10">10dp</dimen>
     <dimen name="app_margin_24">24dp</dimen>

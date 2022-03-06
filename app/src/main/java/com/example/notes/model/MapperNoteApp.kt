@@ -2,7 +2,6 @@ package com.example.notes.model
 
 import com.example.notes.domain.models.NoteDomain
 import java.text.DateFormat
-import java.util.*
 
 interface MapperNoteApp {
 
@@ -31,7 +30,8 @@ interface MapperNoteApp {
                 performed = noteApp.performed
             )
 
-            private fun longToStringDate(long: Long) =
-                DateFormat.getDateInstance().format(long)
+        private fun longToStringDate(long: Long) =
+            DateFormat.getDateInstance().format(long)
     }
 }
+
