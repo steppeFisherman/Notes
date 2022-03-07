@@ -7,15 +7,21 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.notes.databinding.ActivityMainBinding
+import com.example.notes.utils.ConnectionLiveData
+import com.example.notes.utils.snack
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mToolbar: Toolbar
-    lateinit var navController: NavController
+    @Inject
+    lateinit var connectionLiveData: ConnectionLiveData
+    private lateinit var mToolbar: Toolbar
+    private lateinit var navController: NavController
+    private lateinit var mSnack: Snackbar
     private var _binding: ActivityMainBinding? = null
     private val mBinding get() = _binding!!
 
@@ -25,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
         initialise()
-
     }
 
     private fun initialise() {
@@ -34,9 +39,26 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        mSnack = Snackbar
+            .make(mBinding.root, "Проверьте наличие интернета", Snackbar.LENGTH_INDEFINITE)
         setSupportActionBar(mToolbar)
         setupWithNavController(mToolbar, navController)
         title = getString(R.string.title)
+    }
+
+//    override fun onStart() {
+//        super.onStart()
+//        checkNetWorkConnection()
+//    }
+
+    private fun checkNetWorkConnection() {
+        connectionLiveData.checkValidNetworks()
+        connectionLiveData.observe(this, { isNetWorkAvailable ->
+            when (isNetWorkAvailable) {
+                false -> mSnack.show()
+                true -> mSnack.dismiss()
+            }
+        })
     }
 
     override fun onDestroy() {

@@ -7,6 +7,7 @@ import com.example.notes.data.storage.firebase.FirebaseInstance
 import com.example.notes.data.storage.room.AppRoomDao
 import com.example.notes.data.storage.room.AppRoomDatabase
 import com.example.notes.domain.repository.NoteRepository
+import com.example.notes.utils.ConnectionLiveData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,4 +32,9 @@ class DataModule {
             MapperNoteDB.Base(),
             FirebaseInstance.Base()
         )
+
+    @Provides
+    @Singleton
+    fun provideConnectionLiveData(@ApplicationContext context: Context): ConnectionLiveData =
+        ConnectionLiveData(context = context)
 }
