@@ -8,14 +8,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.notes.databinding.ActivityMainBinding
 import com.example.notes.utils.ConnectionLiveData
-import com.example.notes.utils.snack
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NetWorkConnection {
 
     @Inject
     lateinit var connectionLiveData: ConnectionLiveData
@@ -46,12 +45,12 @@ class MainActivity : AppCompatActivity() {
         title = getString(R.string.title)
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        checkNetWorkConnection()
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
-    private fun checkNetWorkConnection() {
+    override fun checkConnection() {
         connectionLiveData.checkValidNetworks()
         connectionLiveData.observe(this, { isNetWorkAvailable ->
             when (isNetWorkAvailable) {
@@ -59,10 +58,5 @@ class MainActivity : AppCompatActivity() {
                 true -> mSnack.dismiss()
             }
         })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

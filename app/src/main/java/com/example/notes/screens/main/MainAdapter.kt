@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.databinding.NoteItemBinding
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.model.NoteApp
+import com.example.notes.utils.convertLongToTime
 
 class MainAdapter(private val clickListener: ClickListener) :
     RecyclerView.Adapter<MainAdapter.MainHolder>() {

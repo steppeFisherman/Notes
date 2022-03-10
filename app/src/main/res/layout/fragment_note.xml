@@ -7,32 +7,57 @@
     android:padding="@dimen/app_margin"
     tools:context=".screens.note.NoteFragment">
 
-    <TextView
-        android:id="@+id/note_date"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputDateLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="@dimen/app_normal_text_14"
-        tools:text="Note date" />
+        android:layout_gravity="end">
 
-    <TextView
-        android:id="@+id/note_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:lines="1"
-        android:textColor="@color/purple_700"
-        android:textSize="@dimen/app_large_text"
-        android:textStyle="bold"
-        tools:text="Name note" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/note_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_date_to_note"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/app_normal_text_14" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/note_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/app_margin"
-        android:textColor="@color/purple_500"
-        android:textSize="@dimen/app_normal_text"
-        tools:text="Note text" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputNameLayout"
+        style="@style/textInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/note_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_name_to_note"
+            android:inputType="text|textMultiLine"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/app_large_text"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputTextLayout"
+        style="@style/textInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/note_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_text_to_note"
+            android:inputType="text|textMultiLine"
+            android:textColor="@color/purple_500"
+            android:textSize="@dimen/app_normal_text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/input_date_note"
+        style="@style/btnStyle"
+        android:text="@string/save"
+        android:textColor="@color/grey" />
+
 </LinearLayout>

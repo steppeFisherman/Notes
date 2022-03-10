@@ -1,25 +1,33 @@
 package com.example.notes.screens.add_new_note
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.notes.NetWorkConnection
 import com.example.notes.R
 import com.example.notes.databinding.FragmentAddNewNoteBinding
 import com.example.notes.model.NoteApp
 import com.example.notes.screens.BaseFragment
+import com.example.notes.utils.ConnectionLiveData
+import com.example.notes.utils.convertLongToTime
+import com.example.notes.utils.hideKeyboard
 import com.example.notes.utils.showToast
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
 
     private val vm by viewModels<AddNewNoteViewModel>()
     private var selectedDate: Long = 0
+    @Inject lateinit var connectionLiveData: ConnectionLiveData
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAddNewNoteBinding.inflate(inflater, container, false)
@@ -28,11 +36,15 @@ class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().title = getString(R.string.new_note)
         mBinding.inputDateNote.setOnClickListener {
-              DatePick.BaseDatePick().obtainCalendar(it) { date ->
+            DatePick.BaseDatePick().obtainCalendar(it) { date ->
                 selectedDate = date
             }
         }
-        mBinding.btnAddNote.setOnClickListener { addNote() }
+        mBinding.btnAddNote.setOnClickListener {
+            (requireActivity() as NetWorkConnection).checkConnection()
+            hideKeyboard(requireActivity(), it)
+            addNote()
+        }
     }
 
     private fun addNote() {
@@ -42,15 +54,13 @@ class AddNewNoteFragment : BaseFragment<FragmentAddNewNoteBinding>() {
         when {
             name.isEmpty() -> showToast(requireActivity(), getString(R.string.toast_enter_name))
             date == "Выберите дату" -> showToast(
-                requireActivity(),
-                getString(R.string.add_date_to_note)
-            )
+                requireActivity(), getString(R.string.add_date_to_note))
             else -> {
                 vm.insert(
                     NoteApp(
                         name = name,
                         text = text,
-                        performDate = selectedDate.toString()
+                        performDate = convertLongToTime(selectedDate)
                     )
                 ) {
                     findNavController()

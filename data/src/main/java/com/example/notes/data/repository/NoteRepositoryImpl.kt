@@ -1,5 +1,6 @@
 package com.example.notes.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.notes.data.storage.firebase.FirebaseInstance
@@ -13,7 +14,6 @@ class NoteRepositoryImpl(
     private val mapper: MapperNoteDB,
     private val firebase: FirebaseInstance
 ) : NoteRepository {
-
     override val allNotes: LiveData<List<NoteDomain>>
         get() = appRoomDao.getAllNotes().map { listNoteCache ->
             listNoteCache.map { noteCache ->
@@ -22,7 +22,6 @@ class NoteRepositoryImpl(
         }
 
     override suspend fun insert(noteDomain: NoteDomain, onSuccess: () -> Unit) {
-
         val noteCache = mapper.mapDomainToCache(noteDomain)
         val noteCloud = mapper.mapDomainToCloud(noteDomain)
 

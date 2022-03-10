@@ -5,10 +5,11 @@
     <string name="start_label">Что использовать</string>
     <string name="start_btn_room">ROOM</string>
     <string name="title">Заметки</string>
-    <string name="note">Заметка</string>
+    <string name="edit_note">Редактировать Заметку</string>
     <string name="new_note">Новая Заметка</string>
     <string name="add_name_to_note">Введите название заметки</string>
     <string name="add_text_to_note">Введите текст</string>
     <string name="add_date_to_note">Выберите дату</string>
     <string name="toast_enter_name">Введите имя заметки</string>
+    <string name="save">Сохранить</string>
 </resources>

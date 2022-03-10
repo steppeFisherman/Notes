@@ -1,7 +1,9 @@
 package com.example.notes.model
 
+import android.annotation.SuppressLint
 import com.example.notes.domain.models.NoteDomain
-import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 interface MapperNoteApp {
 
@@ -16,7 +18,7 @@ interface MapperNoteApp {
                 firebaseId = noteDomain.firebaseId,
                 name = noteDomain.name,
                 text = noteDomain.text,
-                performDate = longToStringDate(noteDomain.performDate),
+                performDate = convertLongToString(noteDomain.performDate),
                 performed = noteDomain.performed
             )
 
@@ -26,12 +28,22 @@ interface MapperNoteApp {
                 firebaseId = noteApp.firebaseId,
                 name = noteApp.name,
                 text = noteApp.text,
-                performDate = (noteApp.performDate.trim()).toLong(),
+                performDate = convertStringToLong(noteApp.performDate),
                 performed = noteApp.performed
             )
 
-        private fun longToStringDate(long: Long) =
-            DateFormat.getDateInstance().format(long)
+        @SuppressLint("SimpleDateFormat")
+        fun convertLongToString(time: Long): String {
+            val date = Date(time)
+            val format = SimpleDateFormat("dd MMMM yyyy")
+            return format.format(date)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun convertStringToLong(date: String): Long {
+            val df = SimpleDateFormat("dd MMMM yyyy")
+            return df.parse(date)?.time ?: 0
+        }
     }
 }
 

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 fun showToast(context: Context, message: String) {
@@ -19,12 +21,9 @@ fun hideKeyboard(activity: Activity, view: View) {
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun View.snack(message: String) = Snackbar.make(this, message, Snackbar.LENGTH_INDEFINITE)
-    //  this.textAlignment = View.TEXT_ALIGNMENT_CENTER
-
 fun View.showSnackLong(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
-  this.textAlignment = View.TEXT_ALIGNMENT_CENTER
+    this.textAlignment = View.TEXT_ALIGNMENT_CENTER
 }
 
 fun View.showSnackIndefinite(message: String) {
@@ -32,7 +31,19 @@ fun View.showSnackIndefinite(message: String) {
     this.textAlignment = View.TEXT_ALIGNMENT_CENTER
 }
 
-@SuppressLint("ShowToast")
-fun View.dismissSnack() {
-    Snackbar.make(this,"", Snackbar.LENGTH_LONG).dismiss()
+@SuppressLint("SimpleDateFormat")
+fun convertLongToTime(time: Long): String {
+    val date = Date(time)
+    val format = SimpleDateFormat("dd MMMM yyyy")
+    return format.format(date)
+}
+
+fun currentTimeToLong(): Long {
+    return System.currentTimeMillis()
+}
+
+@SuppressLint("SimpleDateFormat")
+fun convertDateToLong(date: String): Long {
+    val df = SimpleDateFormat("dd.MM.yyyy")
+    return df.parse(date)?.time ?: 0
 }

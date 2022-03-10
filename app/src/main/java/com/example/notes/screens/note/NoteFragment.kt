@@ -21,30 +21,30 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().title = getString(R.string.note)
+        mCurrentNote = arguments?.getParcelable("note") ?: NoteApp()
+        requireActivity().title = getString(R.string.edit_note)
         initialise()
     }
 
     private fun initialise() {
-        mCurrentNote = arguments?.getParcelable("note") ?: NoteApp()
         setHasOptionsMenu(true)
-        mBinding.noteText.text = mCurrentNote.text
-        mBinding.noteName.text = mCurrentNote.name
-        mBinding.noteDate.text = mCurrentNote.performDate
+        mBinding.noteText.append(mCurrentNote.text)
+        mBinding.noteName.append(mCurrentNote.name)
+        mBinding.noteDate.append(mCurrentNote.performDate)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.note_action_menu, menu)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.btn_delete -> {
-                vm.delete(mCurrentNote) {
-                    findNavController().navigate(R.id.action_noteFragment_to_mainFragment)
-                }
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.btn_delete -> {
+//                vm.delete(mCurrentNote) {
+//                    findNavController().navigate(R.id.action_noteFragment_to_mainFragment)
+//                }
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 }
