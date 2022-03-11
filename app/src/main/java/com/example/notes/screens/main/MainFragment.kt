@@ -1,17 +1,14 @@
 package com.example.notes.screens.main
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
-import com.example.notes.domain.models.NoteDomain
 import com.example.notes.model.NoteApp
 import com.example.notes.screens.BaseFragment
 import com.example.notes.utils.hideKeyboard
@@ -24,12 +21,15 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), MainAdapter.ClickListe
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: MainAdapter
     private lateinit var mObserverList: Observer<List<NoteApp>>
+    private lateinit var mSearchView: SearchView
+
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMainBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         requireActivity().title = getString(R.string.title)
         setUpAdapter()
         sendDataToAdapter()
@@ -37,6 +37,18 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), MainAdapter.ClickListe
             findNavController().navigate(R.id.action_mainFragment_to_addNewNoteFragment)
         }
         hideKeyboard(requireActivity(), view)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_action_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val menuItem = menu.findItem(R.id.fragmentGuard_search)
+        mSearchView = menuItem.actionView as SearchView
+        SearchViewListener.BaseSearchView().search(mSearchView, mAdapter)
+        super.onPrepareOptionsMenu(menu)
     }
 
     private fun setUpAdapter() {

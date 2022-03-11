@@ -8,7 +8,7 @@ data class NoteApp(
     val id: Int = 0,
     val firebaseId: String = "",
     val name: String = "",
-    val text: String = "",
-    val performDate: String = "",
+    var text: String = "",
+    var performDate: String = "",
     var performed: Boolean = false
 ) : Parcelable

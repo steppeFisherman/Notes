@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.notes.NetWorkConnection
 import com.example.notes.R
 import com.example.notes.databinding.FragmentNoteBinding
 import com.example.notes.model.NoteApp
@@ -21,12 +22,12 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mCurrentNote = arguments?.getParcelable("note") ?: NoteApp()
-        requireActivity().title = getString(R.string.edit_note)
+        requireActivity().title = getString(R.string.note)
         initialise()
     }
 
     private fun initialise() {
+        mCurrentNote = arguments?.getParcelable("note") ?: NoteApp()
         setHasOptionsMenu(true)
         mBinding.noteText.append(mCurrentNote.text)
         mBinding.noteName.append(mCurrentNote.name)
@@ -36,15 +37,16 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.note_action_menu, menu)
     }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.btn_delete -> {
-//                vm.delete(mCurrentNote) {
-//                    findNavController().navigate(R.id.action_noteFragment_to_mainFragment)
-//                }
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.btn_delete -> {
+                (requireActivity() as NetWorkConnection).checkConnection()
+                vm.delete(mCurrentNote) {
+                    findNavController().navigate(R.id.action_noteFragment_to_mainFragment)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

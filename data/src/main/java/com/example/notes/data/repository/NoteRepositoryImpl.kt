@@ -1,6 +1,5 @@
 package com.example.notes.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.notes.data.storage.firebase.FirebaseInstance
@@ -46,4 +45,5 @@ class NoteRepositoryImpl(
         } catch (e: java.lang.Exception) {
         }
     }
+
 }
