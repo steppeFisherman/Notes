@@ -10,6 +10,7 @@ interface MapperNoteDB {
     fun mapDomainToCloud(noteDomain: NoteDomain): NoteCloud
     fun mapCacheToDomain(noteCache: NoteCache): NoteDomain
     fun mapCloudToDomain(noteCloud: NoteCloud): NoteDomain
+    fun mapCloudToCache(noteCloud: NoteCloud): NoteCache
 
     class Base : MapperNoteDB {
 
@@ -45,6 +46,16 @@ interface MapperNoteDB {
 
         override fun mapCloudToDomain(noteCloud: NoteCloud) =
             NoteDomain(
+                id = noteCloud.id,
+                firebaseId = noteCloud.firebaseId,
+                name = noteCloud.name,
+                text = noteCloud.text,
+                performDate = noteCloud.performDate,
+                performed = noteCloud.performed
+            )
+
+        override fun mapCloudToCache(noteCloud: NoteCloud) =
+            NoteCache(
                 id = noteCloud.id,
                 firebaseId = noteCloud.firebaseId,
                 name = noteCloud.name,

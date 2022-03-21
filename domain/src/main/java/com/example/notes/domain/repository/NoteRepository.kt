@@ -9,5 +9,4 @@ interface NoteRepository {
 
     suspend fun insert(noteDomain: NoteDomain, onSuccess: () -> Unit)
     suspend fun delete(noteDomain: NoteDomain, onSuccess: () -> Unit)
-
 }

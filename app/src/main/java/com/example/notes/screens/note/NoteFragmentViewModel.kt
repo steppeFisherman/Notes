@@ -27,14 +27,4 @@ class NoteFragmentViewModel @Inject constructor(
             }
         }
     }
-
-//    fun update(noteApp: NoteApp, onSuccess: () -> Unit) {
-//        viewModelScope.launch(baseDispatcher.io()) {
-//            deleteNoteUseCase.execute(mapper.mapAppToDomain(noteApp = noteApp)) {
-//                viewModelScope.launch(baseDispatcher.ui()) {
-//                    onSuccess()
-//                }
-//            }
-//        }
-//    }
 }
