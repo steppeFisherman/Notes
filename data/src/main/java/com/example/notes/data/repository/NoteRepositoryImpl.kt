@@ -7,7 +7,10 @@ import com.example.notes.data.storage.models.NoteCloud
 import com.example.notes.data.storage.room.AppRoomDao
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.domain.repository.NoteRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class NoteRepositoryImpl(
@@ -17,11 +20,45 @@ class NoteRepositoryImpl(
 ) : NoteRepository {
 
     override val allNotes: LiveData<List<NoteDomain>>
-        get() = appRoomDao.getAllNotes().map { listNoteCache ->
+        get() = fetchCache()
+
+    private fun fetchCache() = if (allNotes.value?.isEmpty() == true) {
+        val query = firebase.noteCollectionRef().get().result
+        val listNoteCloud = query?.toObjects(NoteCloud::class.java)
+        val listNoteCache = listNoteCloud?.map {
+            mapper.mapCloudToCache(it)
+        }
+
+        CoroutineScope(Job()).launch(Dispatchers.IO) {
+            listNoteCache?.forEach {
+                appRoomDao.insert(it)
+            }
+        } as LiveData<List<NoteDomain>>
+    } else {
+        appRoomDao.getAllNotes().map { listNoteCache ->
             listNoteCache.map { noteCache ->
                 mapper.mapCacheToDomain(noteCache)
             }
         }
+    }
+
+
+//        val job = CoroutineScope.async(Dispatchers.IO){
+//           val query = firebase.noteCollectionRef().get().result
+//           val listNoteCloud = query?.toObjects(NoteCloud::class.java)
+//
+//            }
+
+
+    // mAllNotes = firebase.noteCollectionRef().get()
+//        }else{
+//            appRoomDao.getAllNotes().map { listNoteCache ->
+//                listNoteCache.map { noteCache ->
+//                    mapper.mapCacheToDomain(noteCache)
+//                }
+//            }
+//        }
+
     override suspend fun insert(noteDomain: NoteDomain, onSuccess: () -> Unit) {
         val noteCache = mapper.mapDomainToCache(noteDomain)
         val noteCloud = mapper.mapDomainToCloud(noteDomain)
