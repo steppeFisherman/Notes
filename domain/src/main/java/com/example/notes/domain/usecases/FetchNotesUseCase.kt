@@ -4,10 +4,14 @@ import androidx.lifecycle.LiveData
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.domain.repository.NoteRepository
 
-class FetchNotesUseCase(private val noteRepository: NoteRepository) {
+interface FetchNotesUseCase {
 
-    fun execute(): LiveData<List<NoteDomain>> {
-        return noteRepository.allNotes
+    fun execute(): LiveData<List<NoteDomain>>
+
+    class Base(private val noteRepository: NoteRepository) : FetchNotesUseCase {
+        override fun execute(): LiveData<List<NoteDomain>> {
+            return noteRepository.allNotes
+        }
     }
 }
 

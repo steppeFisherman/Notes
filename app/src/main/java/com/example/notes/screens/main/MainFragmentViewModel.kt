@@ -23,13 +23,6 @@ class MainFragmentViewModel @Inject constructor(
         listNoteDomain.map { mapper.mapDomainToApp(it) }
     }
 
-//    fun fetchInitialData() {
-//        viewModelScope.launch(baseDispatcher.io()) {
-//            val query = firebase.noteCollectionRef().get().result
-//            val listNoteCloud = query?.toObjects(NoteCloud::class.java)
-//
-//        }
-//    }
 }
 
 
