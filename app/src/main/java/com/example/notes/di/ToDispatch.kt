@@ -9,7 +9,6 @@ interface ToDispatch {
     fun ui(): CoroutineDispatcher
 
     class Base : ToDispatch {
-
         override fun io() = Dispatchers.IO
         override fun ui() = Dispatchers.Main
     }

@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), NetWorkConnection {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         mSnack = Snackbar
-            .make(mBinding.root, "Проверьте наличие интернета", Snackbar.LENGTH_INDEFINITE)
+            .make(mBinding.root, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
         setSupportActionBar(mBinding.toolbar)
         setupWithNavController(mBinding.toolbar, navController)
         title = getString(R.string.title)

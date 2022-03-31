@@ -15,6 +15,10 @@ fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
+fun showToast(context: Context, message: Int) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
 fun hideKeyboard(activity: Activity, view: View) {
     val imm = activity
         .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -26,7 +30,17 @@ fun View.showSnackLong(message: String) {
     this.textAlignment = View.TEXT_ALIGNMENT_CENTER
 }
 
+fun View.showSnackLong(message: Int) {
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+    this.textAlignment = View.TEXT_ALIGNMENT_CENTER
+}
+
 fun View.showSnackIndefinite(message: String) {
+    Snackbar.make(this, message, Snackbar.LENGTH_INDEFINITE).show()
+    this.textAlignment = View.TEXT_ALIGNMENT_CENTER
+}
+
+fun View.showSnackIndefinite(message: Int) {
     Snackbar.make(this, message, Snackbar.LENGTH_INDEFINITE).show()
     this.textAlignment = View.TEXT_ALIGNMENT_CENTER
 }

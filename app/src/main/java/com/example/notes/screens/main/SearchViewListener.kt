@@ -7,7 +7,6 @@ interface SearchViewListener {
     fun search(searchView: SearchView, adapter: MainAdapter)
 
     class BaseSearchView : SearchViewListener {
-
         override fun search(searchView: SearchView, adapter: MainAdapter) {
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {

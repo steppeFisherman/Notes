@@ -11,7 +11,6 @@ interface MapperNoteApp {
     fun mapAppToDomain(noteApp: NoteApp): NoteDomain
 
     class Base : MapperNoteApp {
-
         override fun mapDomainToApp(noteDomain: NoteDomain) =
             NoteApp(
                 id = noteDomain.id,

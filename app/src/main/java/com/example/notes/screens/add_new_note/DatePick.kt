@@ -11,7 +11,6 @@ interface DatePick {
     fun obtainCalendar(view: View, selectedDate: (long: Long) -> Unit)
 
     class BaseDatePick : DatePick {
-
         override fun obtainCalendar(view: View, selectedDate: (long: Long) -> Unit) {
             val currentDateTime = Calendar.getInstance()
             val startYear = currentDateTime.get(Calendar.YEAR)

@@ -11,6 +11,9 @@ interface AppRoomDao {
     fun getAllNotes(): LiveData<List<NoteCache>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertList(noteList: List<NoteCache>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(note: NoteCache)
 
     @Delete

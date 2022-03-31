@@ -7,10 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
-import com.example.notes.domain.models.Result
 import com.example.notes.model.NoteApp
 import com.example.notes.screens.BaseFragment
 import com.example.notes.utils.hideKeyboard
+import com.example.notes.utils.showSnackLong
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,6 +51,15 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), MainAdapter.ClickListe
         vm.allNotes.observe(viewLifecycleOwner, {
             val list = it.asReversed()
             mAdapter.setList(list)
+        })
+
+        vm.error.observe(viewLifecycleOwner, {
+            when (it.ordinal) {
+                0 -> view?.showSnackLong(R.string.no_connection_message)
+                1 -> view?.showSnackLong(R.string.service_unavailable_message)
+                2 -> view?.showSnackLong(R.string.null_pointer_exception)
+                3 -> view?.showSnackLong(R.string.something_went_wrong)
+            }
         })
     }
 

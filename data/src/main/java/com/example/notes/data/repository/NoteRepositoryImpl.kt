@@ -16,7 +16,8 @@ class NoteRepositoryImpl(
 
     override val allNotes: Result
         get() = try {
-            Result.Success(appRoomDao.getAllNotes().map { listNoteCache ->
+            val cacheData = appRoomDao.getAllNotes()
+            Result.Success(cacheData.map { listNoteCache ->
                 listNoteCache.map { noteCache ->
                     mapper.mapCacheToDomain(noteCache)
                 }
@@ -25,11 +26,9 @@ class NoteRepositoryImpl(
             Result.Fail(e)
         }
 
-
     override suspend fun insert(noteDomain: NoteDomain, onSuccess: () -> Unit) {
         val noteCache = mapper.mapDomainToCache(noteDomain)
         val noteCloud = mapper.mapDomainToCloud(noteDomain)
-
         try {
             val id = firebase.noteCollectionRef().add(noteCloud).await().id
             firebase.noteCollectionRef().document(id).update("firebaseId", id).await()
@@ -48,7 +47,7 @@ class NoteRepositoryImpl(
                 .document(noteCloud.firebaseId).delete().await()
             appRoomDao.delete(noteCache)
             onSuccess()
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
         }
     }
 }
