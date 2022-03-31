@@ -12,6 +12,7 @@ import java.util.*
 
 class MainAdapter(private val clickListener: ClickListener) :
     RecyclerView.Adapter<MainAdapter.MainHolder>(), Filterable {
+
     private var mListNotes = emptyList<NoteApp>()
     private var mListNotesFiltered = emptyList<NoteApp>()
 

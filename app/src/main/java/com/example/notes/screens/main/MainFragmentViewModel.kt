@@ -1,15 +1,16 @@
 package com.example.notes.screens.main
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
-import com.example.notes.data.storage.firebase.FirebaseInstance
-import com.example.notes.data.storage.models.NoteCloud
 import com.example.notes.di.ToDispatch
+import com.example.notes.domain.models.Result
 import com.example.notes.domain.usecases.FetchNotesUseCase
 import com.example.notes.model.MapperNoteApp
+import com.example.notes.model.NoteApp
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,10 +20,23 @@ class MainFragmentViewModel @Inject constructor(
     private val mapper: MapperNoteApp,
 ) : ViewModel() {
 
-    val allNotes = fetchNotesUseCase.execute().map { listNoteDomain ->
-        listNoteDomain.map { mapper.mapDomainToApp(it) }
-    }
+    private var mAllNotes = MutableLiveData<List<NoteApp>>()
+    val allNotes: LiveData<List<NoteApp>>
+        get() = mAllNotes
 
+    init {
+        when (val result = fetchNotesUseCase.execute()) {
+            is Result.Success -> {
+                Log.d("AAA", "Success:")
+                mAllNotes = result.notesDomain.map { listNoteDomain ->
+                    listNoteDomain.map { mapper.mapDomainToApp(it) }
+                } as MutableLiveData<List<NoteApp>>
+            }
+            is Result.Fail -> {
+                Log.d("AAA", "exception: ${result.error.cause}")
+            }
+        }
+    }
 }
 
 

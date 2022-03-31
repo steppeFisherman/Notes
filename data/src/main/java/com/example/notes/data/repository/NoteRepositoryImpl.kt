@@ -1,10 +1,10 @@
 package com.example.notes.data.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.notes.data.storage.firebase.FirebaseInstance
 import com.example.notes.data.storage.room.AppRoomDao
 import com.example.notes.domain.models.NoteDomain
+import com.example.notes.domain.models.Result
 import com.example.notes.domain.repository.NoteRepository
 import kotlinx.coroutines.tasks.await
 
@@ -14,12 +14,17 @@ class NoteRepositoryImpl(
     private val firebase: FirebaseInstance
 ) : NoteRepository {
 
-    override val allNotes: LiveData<List<NoteDomain>>
-        get() = appRoomDao.getAllNotes().map { listNoteCache ->
-            listNoteCache.map { noteCache ->
-                mapper.mapCacheToDomain(noteCache)
-            }
+    override val allNotes: Result
+        get() = try {
+            Result.Success(appRoomDao.getAllNotes().map { listNoteCache ->
+                listNoteCache.map { noteCache ->
+                    mapper.mapCacheToDomain(noteCache)
+                }
+            })
+        } catch (e: Exception) {
+            Result.Fail(e)
         }
+
 
     override suspend fun insert(noteDomain: NoteDomain, onSuccess: () -> Unit) {
         val noteCache = mapper.mapDomainToCache(noteDomain)

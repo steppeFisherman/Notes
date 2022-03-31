@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity(), NetWorkConnection {
         navController = navHostFragment.navController
         mSnack = Snackbar
             .make(mBinding.root, "Проверьте наличие интернета", Snackbar.LENGTH_INDEFINITE)
-        setSupportActionBar(mToolbar)
-        setupWithNavController(mToolbar, navController)
+        setSupportActionBar(mBinding.toolbar)
+        setupWithNavController(mBinding.toolbar, navController)
         title = getString(R.string.title)
     }
 
