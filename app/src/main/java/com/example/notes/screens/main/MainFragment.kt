@@ -9,6 +9,7 @@ import com.example.notes.R
 import com.example.notes.databinding.FragmentMainBinding
 import com.example.notes.model.NoteApp
 import com.example.notes.screens.BaseFragment
+import com.example.notes.screens.adapter.MainAdapter
 import com.example.notes.utils.hideKeyboard
 import com.example.notes.utils.showSnackLong
 import dagger.hilt.android.AndroidEntryPoint

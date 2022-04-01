@@ -1,6 +1,7 @@
 package com.example.notes.screens.main
 
 import androidx.appcompat.widget.SearchView
+import com.example.notes.screens.adapter.MainAdapter
 
 interface SearchViewListener {
 

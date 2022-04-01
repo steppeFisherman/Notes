@@ -1,10 +1,11 @@
-package com.example.notes.screens.main
+package com.example.notes.screens.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes.databinding.NoteItemBinding
 import com.example.notes.model.NoteApp
@@ -34,24 +35,22 @@ class MainAdapter(private val clickListener: ClickListener) :
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        holder.nameNote.text = mListNotesFiltered[position].name
-        holder.textNote.text = mListNotesFiltered[position].text
-        holder.dateNote.text = mListNotesFiltered[position].performDate
+        holder.binding.itemNoteName.text = mListNotesFiltered[position].name
+        holder.binding.itemNoteText.text = mListNotesFiltered[position].text
+        holder.binding.itemNoteDate.text = mListNotesFiltered[position].performDate
     }
 
     override fun getItemCount(): Int = mListNotesFiltered.size
 
-    class MainHolder(view: NoteItemBinding) : RecyclerView.ViewHolder(view.root) {
-        val nameNote = view.itemNoteName
-        val textNote = view.itemNoteText
-        val dateNote = view.itemNoteDate
-    }
+    class MainHolder(val binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<NoteApp>) {
-        mListNotes = list
-        mListNotesFiltered = list
-        notifyDataSetChanged()
+    fun setList(newList: List<NoteApp>) {
+        val diffUtil =MyDiffUtil(mListNotesFiltered, newList)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        mListNotes = newList
+        mListNotesFiltered = newList
+        diffResult.dispatchUpdatesTo(this)
     }
 
     interface ClickListener {
@@ -76,7 +75,7 @@ class MainAdapter(private val clickListener: ClickListener) :
                 filterResults.count = mListNotesFiltered.size
                 return filterResults
             }
-
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(
                 charSequence: CharSequence?,
                 filterResults: FilterResults?
