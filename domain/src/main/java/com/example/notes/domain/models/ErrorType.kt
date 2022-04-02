@@ -1,4 +1,4 @@
-package com.example.notes.model
+package com.example.notes.domain.models
 
 enum class ErrorType {
     NO_CONNECTION,

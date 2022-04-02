@@ -3,10 +3,13 @@ package com.example.notes.data.repository
 import androidx.lifecycle.map
 import com.example.notes.data.storage.firebase.FirebaseInstance
 import com.example.notes.data.storage.room.AppRoomDao
+import com.example.notes.domain.models.ErrorType
 import com.example.notes.domain.models.NoteDomain
 import com.example.notes.domain.models.Result
 import com.example.notes.domain.repository.NoteRepository
+import com.google.firebase.FirebaseApiNotAvailableException
 import kotlinx.coroutines.tasks.await
+import java.net.UnknownHostException
 
 class NoteRepositoryImpl(
     private val appRoomDao: AppRoomDao,
@@ -16,14 +19,20 @@ class NoteRepositoryImpl(
 
     override val allNotes: Result
         get() = try {
-            val cacheData = appRoomDao.getAllNotes()
-            Result.Success(cacheData.map { listNoteCache ->
+            Result.Success(appRoomDao.getAllNotes().map { listNoteCache ->
                 listNoteCache.map { noteCache ->
                     mapper.mapCacheToDomain(noteCache)
                 }
             })
         } catch (e: Exception) {
-            Result.Fail(e)
+            Result.Fail(
+                when (e) {
+                    is UnknownHostException -> ErrorType.NO_CONNECTION
+                    is FirebaseApiNotAvailableException -> ErrorType.SERVICE_UNAVAILABLE
+                    is NullPointerException -> ErrorType.NULL_POINTER_EXCEPTION
+                    else -> ErrorType.GENERIC_ERROR
+                }
+            )
         }
 
     override suspend fun insert(noteDomain: NoteDomain, onSuccess: () -> Unit) {

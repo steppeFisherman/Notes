@@ -7,7 +7,7 @@ import androidx.lifecycle.map
 import com.example.notes.di.ToDispatch
 import com.example.notes.domain.models.Result
 import com.example.notes.domain.usecases.FetchNotesUseCase
-import com.example.notes.model.ErrorType
+import com.example.notes.domain.models.ErrorType
 import com.example.notes.model.MapperNoteApp
 import com.example.notes.model.NoteApp
 import com.google.firebase.FirebaseApiNotAvailableException
@@ -36,14 +36,7 @@ class MainFragmentViewModel @Inject constructor(
                     listNoteDomain.map { mapper.mapDomainToApp(it) }
                 } as MutableLiveData<List<NoteApp>>
             }
-            is Result.Fail -> {
-                mError.value = when (result.error) {
-                    is UnknownHostException -> ErrorType.NO_CONNECTION
-                    is FirebaseApiNotAvailableException -> ErrorType.SERVICE_UNAVAILABLE
-                    is NullPointerException -> ErrorType.NULL_POINTER_EXCEPTION
-                    else -> ErrorType.GENERIC_ERROR
-                }
-            }
+            is Result.Fail -> mError.value = result.errorType
         }
     }
 }
